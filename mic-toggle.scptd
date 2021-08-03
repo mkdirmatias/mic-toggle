@@ -1,0 +1,21 @@
+property storedOutputLevel : 10
+
+if output muted of (get volume settings) is true then
+	-- Activar todo
+	set volume input volume 100
+	set volume output volume storedOutputLevel
+	set displayNotification to "Activado"
+else
+	-- Guardar volumen
+	tell application "System Events"
+		set storedOutputLevel to output volume of (get volume settings)
+	end tell
+	
+	-- Mutear todo
+	set volume input volume 0
+	set volume with output muted
+	set displayNotification to "Desactivado"
+end if
+
+display notification displayNotification with title "Estado del Sonido"
+delay 1
